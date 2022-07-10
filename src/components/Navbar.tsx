@@ -1,7 +1,19 @@
-import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
+import { Badge, Drawer } from "@mui/material";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar as NavbarBs,
+  Offcanvas,
+} from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useState } from "react";
 
 export function Navbar() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <NavbarBs className="shadow-sm bg-white fs-1 d-flex">
       <Nav className="me-auto">
@@ -15,7 +27,23 @@ export function Navbar() {
           About
         </Nav.Link>
       </Nav>
-      <Button variant="outline-primary">cart</Button>
+      <Badge
+        badgeContent={1}
+        color="primary"
+        className="m-4"
+        onClick={handleShow}
+      >
+        <ShoppingCartIcon />
+        <Offcanvas show={show} onHide={handleClose}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            Some text as placeholder. In real life you can have the elements you
+            have chosen. Like, text, images, lists, etc.
+          </Offcanvas.Body>
+        </Offcanvas>
+      </Badge>
     </NavbarBs>
   );
 }
