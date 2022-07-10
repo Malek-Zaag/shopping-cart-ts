@@ -9,8 +9,10 @@ import {
 import { NavLink } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useState } from "react";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 
 export function Navbar() {
+  const { openCart, cartQuantity } = useShoppingCart();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -27,23 +29,16 @@ export function Navbar() {
           About
         </Nav.Link>
       </Nav>
-      <Badge
-        badgeContent={1}
-        color="primary"
-        className="m-4"
-        onClick={handleShow}
-      >
-        <ShoppingCartIcon />
-        <Offcanvas show={show} onHide={handleClose}>
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            Some text as placeholder. In real life you can have the elements you
-            have chosen. Like, text, images, lists, etc.
-          </Offcanvas.Body>
-        </Offcanvas>
-      </Badge>
+      {cartQuantity > 0 && (
+        <Badge
+          badgeContent={cartQuantity}
+          color="primary"
+          className="m-4"
+          onClick={openCart}
+        >
+          <ShoppingCartIcon />
+        </Badge>
+      )}
     </NavbarBs>
   );
 }
